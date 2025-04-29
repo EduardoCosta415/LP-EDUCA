@@ -25,15 +25,6 @@ export default function CourseSection() {
             />
           ))}
         </div>
-        
-        <div className="text-center mt-12">
-          <a 
-            href="#" 
-            className="bg-primary text-white font-poppins font-medium px-6 py-3 rounded-md hover:bg-primary/90 transition inline-block"
-          >
-            Ver todos os cursos
-          </a>
-        </div>
       </div>
     </section>
   );

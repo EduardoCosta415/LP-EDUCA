@@ -70,5 +70,13 @@ export const courseData = [
     description: "Metodologias de ensino inovadoras, tecnologias educacionais e gestão de instituições de ensino.",
     rating: 3.5,
     reviews: 87
+  },
+  {
+    image: "https://images.unsplash.com/photo-1537511446984-935f663eb1f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
+    title: "Gestão de Projetos",
+    category: "Administração e Gestão",
+    description: "Metodologias e ferramentas para gerenciamento eficiente de projetos, aplicação de boas práticas e certificações.",
+    rating: 4.8,
+    reviews: 163
   }
 ];
