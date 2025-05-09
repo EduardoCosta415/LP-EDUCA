@@ -1,92 +1,54 @@
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaClock } from "react-icons/fa";
+import { Link } from "wouter";
 
 export default function Footer() {
   return (
-    <footer className="bg-neutral-800 text-white pt-16 pb-8">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-          <div>
-            <div className="mb-6">
-              <span className="text-white font-poppins font-bold text-2xl">
-                Educa<span className="text-secondary">Mais</span>Minas
-              </span>
-            </div>
-            <p className="text-neutral-300 mb-6">
-              Transformando carreiras através da educação de qualidade desde 2010.
-            </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-white hover:text-secondary transition" aria-label="Facebook">
-                <FaFacebookF className="text-xl" />
-              </a>
-              <a href="#" className="text-white hover:text-secondary transition" aria-label="Instagram">
-                <FaInstagram className="text-xl" />
-              </a>
-              <a href="#" className="text-white hover:text-secondary transition" aria-label="LinkedIn">
-                <FaLinkedinIn className="text-xl" />
-              </a>
-              <a href="#" className="text-white hover:text-secondary transition" aria-label="YouTube">
-                <FaYoutube className="text-xl" />
-              </a>
-            </div>
-          </div>
-          
-          <div>
-            <h3 className="font-poppins font-semibold text-lg mb-6">Cursos</h3>
-            <ul className="space-y-3">
-              <li><a href="#" className="text-neutral-300 hover:text-white transition">MBA e Especialização</a></li>
-              <li><a href="#" className="text-neutral-300 hover:text-white transition">Pós-Graduação</a></li>
-              <li><a href="#" className="text-neutral-300 hover:text-white transition">Cursos Livres</a></li>
-              <li><a href="#" className="text-neutral-300 hover:text-white transition">Cursos In Company</a></li>
-              <li><a href="#" className="text-neutral-300 hover:text-white transition">Cursos EAD</a></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="font-poppins font-semibold text-lg mb-6">Institucional</h3>
-            <ul className="space-y-3">
-              <li><a href="#" className="text-neutral-300 hover:text-white transition">Sobre Nós</a></li>
-              <li><a href="#" className="text-neutral-300 hover:text-white transition">Docentes</a></li>
-              <li><a href="#" className="text-neutral-300 hover:text-white transition">Parcerias</a></li>
-              <li><a href="#" className="text-neutral-300 hover:text-white transition">Trabalhe Conosco</a></li>
-              <li><a href="#" className="text-neutral-300 hover:text-white transition">Termos de Uso</a></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="font-poppins font-semibold text-lg mb-6">Contato</h3>
-            <ul className="space-y-3">
-              <li className="flex items-start">
-                <FaMapMarkerAlt className="mt-1 mr-3 text-secondary" />
-                <span className="text-neutral-300">Av. Afonso Pena, 1500, Belo Horizonte - MG</span>
-              </li>
-              <li className="flex items-start">
-                <FaPhoneAlt className="mt-1 mr-3 text-secondary" />
-                <span className="text-neutral-300">(31) 3333-4444</span>
-              </li>
-              <li className="flex items-start">
-                <FaEnvelope className="mt-1 mr-3 text-secondary" />
-                <span className="text-neutral-300">contato@educamaisminas.com.br</span>
-              </li>
-              <li className="flex items-start">
-                <FaClock className="mt-1 mr-3 text-secondary" />
-                <span className="text-neutral-300">Segunda a Sexta: 8h às 22h<br/>Sábado: 8h às 14h</span>
-              </li>
-            </ul>
-          </div>
+    <footer className="bg-[#1C1B3A] text-neutral-300 py-8 px-4 text-sm">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Coluna 1 - Logo + Políticas (mais à esquerda) */}
+        <div className="flex flex-col items-start">
+          <img src="Logo/rosinha.png" alt="Logo" className="w-32 mb-4" />
+          <ul className="space-y-1">
+            <li>
+              <a href="/cookies" target="_blank"className="hover:text-white transition">Política de Cookies</a>
+            </li>
+            <li>
+              <a href="/privacidade" target="_blank" className="hover:text-white transition">Política de Privacidade</a>
+            </li>
+            <li>
+              <a href="/matriculasorte" target="_blank" className="hover:text-white transition">Regulamento Matrícula da Sorte</a>
+            </li>
+          </ul>
         </div>
-        
-        <hr className="border-neutral-700 mb-8" />
-        
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <p className="text-neutral-400 text-sm mb-4 md:mb-0">
-            © {new Date().getFullYear()} EducaMaisMinas. Todos os direitos reservados.
+
+        {/* Coluna 2 - Imagens com links (QR code e outro selo) */}
+        <div className="flex flex-col items-start space-y-2">
+  <p className="font-semibold text-white">CADASTRO NO SISTEMA E-MEC</p>
+  <div className="flex gap-40">
+    <a href="https://emec.mec.gov.br" target="_blank" rel="noopener noreferrer">
+      <img src="footer/qrcode.jpeg" alt="QR Code" className="w-28 h-28" />
+    </a>
+    <a href="https://www.reclameaqui.com.br/" target="_blank" rel="noopener noreferrer">
+      <img src="/segunda-imagem.png" alt="Reclame Aqui" className="w-24 h-24" />
+    </a>
+  </div>
+</div>
+
+        {/* Coluna 3 - Endereço e CNPJ */}
+        <div className="flex flex-col justify-end">
+          <p>
+            Rua Luiz Rodrigues dos Santos, nº 44, sala 204, Bairro Todos os Santos<br />
+            Coronel Fabriciano - Minas Gerais<br />
+            CEP: 35170-061
           </p>
-          <div className="flex space-x-4">
-            <a href="#" className="text-neutral-400 text-sm hover:text-white transition">Política de Privacidade</a>
-            <a href="#" className="text-neutral-400 text-sm hover:text-white transition">Termos de Uso</a>
-            <a href="#" className="text-neutral-400 text-sm hover:text-white transition">Cookies</a>
-          </div>
+          <p className="mt-2">
+            Educa Mais Minas LTDA<br />
+            CNPJ: 46.713.585/0001-98
+          </p>
         </div>
+      </div>
+
+      <div className="mt-8 text-center text-neutral-500 text-xs">
+        © {new Date().getFullYear()} EducaMaisMinas. Todos os direitos reservados.
       </div>
     </footer>
   );

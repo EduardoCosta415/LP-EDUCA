@@ -1,15 +1,15 @@
-import { useState, useRef, useEffect } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { testimonialData } from "@/data/testimonialData";
-import { benefitsData } from "@/data/benefitsData";
-import StarRating from "./StarRating";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef, useEffect } from "react"; // Hooks do React
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa"; // Ícones de navegação
+import { testimonialData } from "@/data/testimonialData"; // Dados dos depoimentos
+import StarRating from "./StarRating"; // Componente de avaliação por estrelas
+import { motion, AnimatePresence } from "framer-motion"; // Biblioteca de animação
 
 export default function TestimonialsSection() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [direction, setDirection] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Inicia o autoplay
   const startAutoplay = () => {
     intervalRef.current = setInterval(() => {
       setDirection(1);
@@ -17,6 +17,7 @@ export default function TestimonialsSection() {
     }, 6000);
   };
 
+  // Para o autoplay
   const stopAutoplay = () => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
@@ -29,6 +30,7 @@ export default function TestimonialsSection() {
     return () => stopAutoplay();
   }, []);
 
+  // Navegar para anterior
   const handlePrev = () => {
     stopAutoplay();
     setDirection(-1);
@@ -36,6 +38,7 @@ export default function TestimonialsSection() {
     startAutoplay();
   };
 
+  // Navegar para próximo
   const handleNext = () => {
     stopAutoplay();
     setDirection(1);
@@ -43,6 +46,7 @@ export default function TestimonialsSection() {
     startAutoplay();
   };
 
+  // Animações com Framer Motion
   const variants = {
     enter: (direction: number) => ({
       x: direction > 0 ? 300 : -300,
@@ -61,14 +65,21 @@ export default function TestimonialsSection() {
   return (
     <section id="depoimentos" className="py-16 bg-neutral-100">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col lg:flex-row gap-12">
-          {/* Testimonials Column */}
-          <div className="lg:w-1/2">
-            <h2 className="font-poppins font-bold text-3xl text-neutral-800 mb-8">
-              O que nossos alunos dizem
+        <div className="flex justify-center">
+
+          {/* Apenas a Coluna de Depoimentos */}
+          <div className="w-full lg:w-1/2 flex flex-col items-center">
+            <h2 className="font-poppins font-bold text-4xl text-[#1C1B3A] mb-8 text-center">
+              Depoimentos que Inspiram
             </h2>
-            
-            <div className="relative overflow-hidden">
+
+            {/* Moldura estilo iPhone 6 */}
+            <div className="relative w-[320px] h-[480px] lg:h-[568px] border-[8px] border-neutral-800 rounded-[48px] bg-white shadow-2xl overflow-hidden">
+
+              {/* Alto-falante superior (detalhe do iPhone) */}
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-1.5 bg-neutral-500 rounded-full z-10" />
+
+              {/* Conteúdo do depoimento com animação */}
               <AnimatePresence initial={false} custom={direction} mode="wait">
                 <motion.div
                   key={currentTestimonial}
@@ -82,17 +93,22 @@ export default function TestimonialsSection() {
                     stiffness: 300,
                     damping: 30,
                   }}
-                  className="testimonial-item bg-white p-6 rounded-lg shadow-md"
+                  className="p-6 h-full flex flex-col justify-center gap-4"
                 >
+                  {/* Dados do depoente */}
                   <div className="flex items-center mb-4">
                     <img 
                       src={testimonialData[currentTestimonial].image} 
                       alt={testimonialData[currentTestimonial].name} 
-                      className="w-16 h-16 rounded-full object-cover mr-4"
+                      className="w-16 h-16 rounded-full object-cover mr-2"
                     />
                     <div>
-                      <h3 className="font-poppins font-semibold text-lg">{testimonialData[currentTestimonial].name}</h3>
-                      <p className="text-neutral-500 text-sm">{testimonialData[currentTestimonial].course}</p>
+                      <h3 className="font-poppins font-semibold text-[17px] tracking-tighter">
+                        {testimonialData[currentTestimonial].name}
+                      </h3>
+                      <p className="text-neutral-500 text-sm">
+                        {testimonialData[currentTestimonial].course}
+                      </p>
                       <div className="mt-1">
                         <StarRating rating={testimonialData[currentTestimonial].rating} />
                       </div>
@@ -103,21 +119,23 @@ export default function TestimonialsSection() {
                   </p>
                 </motion.div>
               </AnimatePresence>
-              
-              <div className="flex justify-between mt-6">
+
+              {/* Botões de navegação */}
+              <div className="absolute bottom-6 left-0 right-0 flex justify-between px-6 z-10">
                 <button 
-                  className="bg-white p-3 rounded-full shadow-md hover:bg-neutral-100 transition"
+                  className="bg-white p-2 rounded-full shadow-md hover:bg-neutral-100 transition"
                   onClick={handlePrev}
                   aria-label="Previous testimonial"
                 >
                   <FaArrowLeft className="text-primary" />
                 </button>
-                
+
+                {/* Indicadores (pontos) */}
                 <div className="flex gap-2 items-center">
                   {testimonialData.map((_, index) => (
                     <button
                       key={index}
-                      className={`w-3 h-3 rounded-full ${
+                      className={`w-2.5 h-2.5 rounded-full ${
                         currentTestimonial === index ? "bg-primary" : "bg-neutral-300"
                       }`}
                       onClick={() => {
@@ -130,38 +148,18 @@ export default function TestimonialsSection() {
                     ></button>
                   ))}
                 </div>
-                
+
                 <button 
-                  className="bg-white p-3 rounded-full shadow-md hover:bg-neutral-100 transition"
+                  className="bg-white p-2 rounded-full shadow-md hover:bg-neutral-100 transition"
                   onClick={handleNext}
                   aria-label="Next testimonial"
                 >
                   <FaArrowRight className="text-primary" />
                 </button>
               </div>
-            </div>
-          </div>
-          
-          {/* Benefits Column */}
-          <div className="lg:w-1/2">
-            <h2 className="font-poppins font-bold text-3xl text-neutral-800 mb-8">
-              Por que escolher a EducaMaisMinas
-            </h2>
-            
-            <div className="space-y-6">
-              {benefitsData.map((benefit, index) => (
-                <div key={index} className="flex">
-                  <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
-                    <i className={`fas ${benefit.icon} text-primary text-xl`}></i>
-                  </div>
-                  <div>
-                    <h3 className="font-poppins font-semibold text-lg mb-1">{benefit.title}</h3>
-                    <p className="text-neutral-600">
-                      {benefit.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
+
+              {/* Botão Home (decoração) */}
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-16 h-16 border-1 border-neutral-300 rounded-full"></div>
             </div>
           </div>
         </div>

@@ -1,37 +1,33 @@
 export const advantagesData = [
   {
-    title: "Melhor Remuneração",
-    description: "Profissionais com pós-graduação têm salários até 40% maiores que graduados.",
-    icon: "fa-chart-line"
+    title: "Flexibilidade",
+    description: "Estude no seu tempo, de onde quiser sem transito, sem extresse.",
+    icon: "/advantages/flex.png"
   },
   {
     title: "Diferencial Competitivo",
     description: "Destaque-se no mercado com conhecimentos especializados e atualizados.",
-    icon: "fa-building"
+    icon: "/advantages/diferencial.png"
   },
   {
-    title: "Networking Qualificado",
-    description: "Construa conexões com profissionais e especialistas da sua área.",
-    icon: "fa-users"
+    title: "Economia",
+    description: "Pós de qualidade com preço acessivel e zero custo com deslocamento.",
+    icon: "/advantages/economia.png"
   },
   {
-    title: "Aprofundamento Técnico",
-    description: "Desenvolva expertise técnica avançada para resolver problemas complexos.",
-    icon: "fa-laptop-code"
+    title: "Certificado Rápido e Válido",
+    description: "Certificado autorizado pelo MEC, aceito em todo o Brasil com entrega digital em até 48 horas úteis após a conclusão.",
+    icon: "/advantages/certificado.png"
   },
   {
-    title: "Possibilidade de Docência",
-    description: "Abra portas para a carreira acadêmica e compartilhe conhecimento.",
-    icon: "fa-chalkboard-teacher"
+    title: "Suporte Completo",
+    description: "Atendimento humanizado e suporte tecnico e pedagógico durante toda a sua jornada.",
+    icon: "/advantages/suporte.png"
   },
   {
-    title: "Reconhecimento Profissional",
-    description: "Ganhe mais credibilidade e respeito no ambiente corporativo.",
-    icon: "fa-award"
-  },
-  {
-    title: "Internacionalização",
-    description: "Amplie suas oportunidades de trabalho no mercado global.",
-    icon: "fa-globe"
+    title: "Matricula da Sorte",
+    description: "Matriclou? Já Concorre a prêmios mensais como o DOBRO do valor investido e a uma MOTO 0km no sorteio anual!.",
+    icon: "/advantages/trevodasorte.jpg"
   }
+ 
 ];
