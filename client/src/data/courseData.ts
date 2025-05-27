@@ -1,6 +1,6 @@
 export const courseData = [
   {
-    image: "https://images.unsplash.com/photo-1590402494587-44b71d7772f6?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
+    image: "footer/educacao.jpg",
     title: "Educação",
     category: "Transformando mentes",
     description: "Desenvolvimento de habilidades gerenciais e estratégicas para liderar empresas e equipes com excelência.",
@@ -25,14 +25,14 @@ export const courseData = [
   },
   {
     image: "course/juridica.jpg",
-    title: "Juridica",
+    title: "Jurídica",
     category: "Direito que Protege",
     description: "Comportamento humano no ambiente de trabalho, desenvolvimento de equipes e cultura organizacional.",
     rating: 4.5,
     reviews: 125
   },
   {
-    image: "course/negocios.jpg",
+    image: "footer/negocios.jpg",
     title: "Negócios",
     category: "Crescendo com estratégia",
     description: "Legislação societária, contratual e trabalhista para advogados e gestores que atuam com empresas.",
@@ -56,7 +56,7 @@ export const courseData = [
     reviews: 207
   },
   {
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
+    image: "footer/comunicacao.png",
     title: "Comunicação",
     category: "Conectando pessoas",
     description: "Administração de organizações de saúde, gestão hospitalar e políticas públicas no setor.",

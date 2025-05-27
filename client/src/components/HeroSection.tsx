@@ -12,19 +12,19 @@ export default function HeroSection() {
             media="(min-width: 1440px)" 
           />
           <source 
-            srcSet="/advantages/banner1024.png" 
+            srcSet="/advantages/banner1024.jpeg" 
             media="(min-width: 1024px)" 
           />
          <source
-         srcSet="advantages/banner768x960.png"
-         media="(min-width: 768px)"        
+         srcSet="advantages/banner768.jpeg"
+         media="(max-width: 768px)"        
  
 
          />
           <img 
-            src="/advantages/banner1024.png" 
+            src="/advantages/banner1024.jpeg" 
             alt="Estudantes profissionais em sala de aula" 
-            className="w-full h-[550px] max-sm:h-auto"
+            className="w-full h-auto min-h-[600px] max-sm:h-auto"
           />
         </picture>
       </div>

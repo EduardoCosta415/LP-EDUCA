@@ -16,9 +16,7 @@ export default function Home() {
       <CourseSection />
       <PricingPlans />
       <TestimonialsSection />
-      
-      
-      <Footer />
+       <Footer />
     </div>
   );
 }

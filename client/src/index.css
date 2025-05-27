@@ -26,6 +26,11 @@
   --destructive-foreground: 0 0% 100%;
   --ring: 342 82% 51%;
   --radius: 0.5rem;
+  ---background: #ffffff;
+  --primary-text-color: #212148;
+  --primary-pink: #E71F5D;
+
+
 }
 
 .dark {

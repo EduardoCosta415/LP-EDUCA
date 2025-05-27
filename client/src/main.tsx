@@ -1,13 +1,11 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
-import { Router } from "wouter"; // <- substitui o BrowserRouter
-import "./index.css";
+import '@/index.css';
+
 
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+    <App />
   </React.StrictMode>
 );

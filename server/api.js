@@ -20,13 +20,12 @@ const corsOptions = {
   origin: (origin, callback) => {
     const allowedOrigins = [
       process.env.FRONTEND_URL,
-      'http://localhost:5000',
-      'http://localhost:3000'
+      'http://localhost:5000/'
     ].filter(Boolean);
 
     // Permitir requisições sem origin (como mobile apps ou curl)
     if (!origin) return callback(null, true);
-    
+
     if (allowedOrigins.some(allowedOrigin => origin.startsWith(allowedOrigin))) {
       callback(null, true);
     } else {
@@ -76,15 +75,17 @@ const dbConfig = {
 let pool;
 
 const initializePool = async () => {
-  pool = mysql.createPool(dbConfig);
-  try {
-    const connection = await pool.getConnection();
-    await connection.ping();
-    connection.release();
-    console.log('✅ Conexão com o banco de dados estabelecida com sucesso');
-  } catch (error) {
-    console.error('❌ Erro ao conectar ao banco de dados:', error);
-    process.exit(1);
+  if (!pool) {
+    pool = mysql.createPool(dbConfig);
+    try {
+      const connection = await pool.getConnection();
+      await connection.ping();
+      connection.release();
+      console.log('✅ Conexão com o banco de dados estabelecida com sucesso');
+    } catch (error) {
+      console.error('❌ Erro ao conectar ao banco de dados:', error);
+      process.exit(1);
+    }
   }
 };
 
@@ -113,8 +114,8 @@ app.post('/meta/send', async (req, res) => {
   let connection;
   try {
     // Validação dos dados de entrada
-    const { name, phone, promotion_name, quantity, price, utm,graduation } = req.body;
-    
+    const { name, phone, promotion_name, quantity, price, utm, graduation } = req.body;
+
     if (!name || !phone) {
       return res.status(400).json({
         status: 'error',
@@ -246,25 +247,36 @@ app.use((err, req, res, next) => {
 });
 
 // ==============================================
-// Inicialização do Servidor
+// Inicialização do Servidor na Vercel (Serverless)
 // ==============================================
 
-const startServer = async () => {
+let initialized = false;
+
+const handler = async (req, res) => {
   try {
-    await initializePool();
-    
-    app.listen(PORT, () => {
-      console.log(`🚀 Servidor rodando na porta ${PORT}`);
+    if (!initialized) {
+      await initializePool();
+      initialized = true;
+      console.log('🚀 Pool de conexões inicializado');
       console.log('🔒 Configuração de CORS:', corsOptions);
       console.log('🛡️ Ambiente:', process.env.NODE_ENV || 'development');
-    });
+    }
+    return app(req, res); // Vercel executa o Express como função handler
   } catch (error) {
-    console.error('❌ Falha ao iniciar o servidor:', error);
-    process.exit(1);
+    console.error('❌ Erro durante inicialização:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Erro interno no servidor durante a inicialização',
+      ...(process.env.NODE_ENV === 'development' && {
+        details: error.message,
+        stack: error.stack
+      })
+    });
   }
 };
 
-startServer();
-
-// Export para testes
-export default app;
+initializePool().then(() => {
+  app.listen(PORT, () => {
+    console.log(`🚀 Servidor rodando localmente em http://localhost:${PORT}`);
+  });
+});

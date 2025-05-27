@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import Modal from "./Modal"; // Import do modal
+import Modal from "./Modal";
+import MatriculaSorteModal from "@/pages/matriculasorte";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMatriculaOpen, setModalMatriculaOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -13,18 +15,47 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleSubmit = (name: string, phone: string) => {
-    console.log("Formulário enviado:", name, phone);
-    setIsModalOpen(false);
+  const handleApiSubmit = async (name: string, phone: string) => {
+    try {
+      const response = await fetch("https://www.polofaculdades.com.br/meta/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          full_name: name,
+          phone: phone.replace(/\D/g, ''),
+          promotion_name: "Interesse em Matrícula",
+          promotion_quantity: 1,
+          promotion_price: 0,
+          utm: new URLSearchParams(window.location.search).get('utm_source') || "",
+          graduation: "",
+          type: "matricula"
+        })
+      });
+
+      if (!response.ok) throw new Error("Erro ao enviar dados");
+      
+      console.log("Dados enviados com sucesso!");
+      setIsModalOpen(false);
+      
+      // Redirecionamento opcional para WhatsApp
+      const whatsappNumber = '553193450978';
+      const message = `Olá! Meu nome é ${name} e gostaria de finalizar minha matrícula.`;
+      window.location.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+      
+    } catch (error) {
+      console.error("Erro:", error);
+    }
   };
+
+  const hiddenMatriculaModal = () => setModalMatriculaOpen(!modalMatriculaOpen);
 
   return (
     <>
-      {/* Header fixo no topo */}
       <header className={`bg-white sticky top-0 z-50 ${isScrolled ? "shadow-md" : ""}`}>
+        {modalMatriculaOpen && <MatriculaSorteModal onClose={hiddenMatriculaModal} />}
+        
         <div className="max-w-full mx-auto py-2 px-4 flex justify-between items-center">
-
-          {/* Logo do lado esquerdo */}
+          {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/">
               <a>
@@ -39,13 +70,14 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Menu de navegação central - Desktop */}
-          <div className="hidden md:flex flex-wrap items-center gap-4 lg:gap-6 xl:gap-8 pl-2 max-w-full">
-          <a href="#cursos" className="font-poppins font-medium text-neutral-800 hover:text-primary transition flex items-center gap-1">
-  <span>ÁREAS</span>
-  <img src="advantages/plus.png" alt="Mais" className="h-4 w-4" />
-  <span>VALORIZADAS</span>
-</a>  <a href="#planos" className="font-poppins font-medium text-neutral-800 hover:text-primary transition">
+          {/* Menu Desktop */}
+          <div className="hidden lg:flex flex-wrap items-center gap-4 lg:gap-6 xl:gap-8 pl-2 max-w-full">
+            <a href="#cursos" className="font-poppins font-medium text-neutral-800 hover:text-primary transition flex items-center gap-1">
+              <span>ÁREAS</span>
+              <img src="advantages/plus.png" alt="Mais" className="h-4 w-4" />
+              <span>VALORIZADAS</span>
+            </a>
+            <a href="#planos" className="font-poppins font-medium text-neutral-800 hover:text-primary transition">
               PLANOS
             </a>
             <a
@@ -58,25 +90,10 @@ export default function Header() {
             <a href="#depoimentos" className="font-poppins font-medium text-neutral-800 hover:text-primary transition">
               DEPOIMENTOS
             </a>
-           
           </div>
 
-          {/* Botões à direita com espaçamento entre si */}
-          <div className="hidden md:flex items-center gap-4 lg:gap-6 xl:gap-8 pl-2">
-          <a
-  href="/matriculasorte"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="font-poppins text-white bg-green-600 font-extrabold px-2 py-2 rounded-md hover:bg-green-700 transition inline-flex items-center gap-2 flex-shrink-0"
->
-<span className="truncate">MATRÍCULA DA SORTE</span>
-  <img
-    src="/advantages/trevo14.png"
-    alt="Trevo da Sorte"
-    className="w-[25px] h-[25px] object-contain"
-  />
-</a>
-
+          {/* Botões Desktop */}
+          <div className="hidden lg:flex items-center gap-4 lg:gap-6 xl:gap-8 pl-2">
             <button
               onClick={() => setIsModalOpen(true)}
               className="font-poppins bg-primary text-white px-8 py-2 rounded-md hover:bg-primary/90 transition inline-flex items-center gap-8 font-extrabold"
@@ -85,8 +102,8 @@ export default function Header() {
             </button>
           </div>
 
-          {/* Botão hamburguer - Mobile */}
-          <div className="md:hidden">
+          {/* Menu Mobile */}
+          <div className="lg:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-neutral-800"
@@ -97,9 +114,9 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Menu Mobile - visível apenas no mobile */}
+        {/* Menu Mobile Aberto */}
         {isMenuOpen && (
-          <div className="md:hidden bg-white border-t border-neutral-200 p-4">
+          <div className="lg:hidden bg-white border-t border-neutral-200 p-4">
             <div className="flex flex-col space-y-3">
               <a href="#cursos" className="font-poppins font-medium text-neutral-800 hover:text-primary transition" onClick={() => setIsMenuOpen(false)}>
                 Áreas Mais Valorizadas
@@ -113,27 +130,31 @@ export default function Header() {
               <a href="#depoimentos" className="font-poppins font-medium text-neutral-800 hover:text-primary transition" onClick={() => setIsMenuOpen(false)}>
                 Depoimentos
               </a>
-            
-              <a href="#consultores" className="font-poppins bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition text-center" onClick={() => setIsMenuOpen(false)}>
-                Matrícula da Sorte
-              </a>
-              <a href="#contato" className="font-poppins bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition text-center" onClick={() => setIsMenuOpen(false)}>
-                Fale Conosco
-              </a>
+              
+              <button
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setIsModalOpen(true);
+                }}
+                className="font-poppins bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition text-center font-extrabold"
+              >
+                MATRICULE-SE
+              </button>
             </div>
           </div>
         )}
 
-        {/* Modal de matrícula */}
+        {/* Modal de Matrícula */}
         <Modal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          onSubmit={handleSubmit}
+          planName="Matricula"
+          apiUrl="https://www.polofaculdades.com.br/meta/send"
+          onSubmit={handleApiSubmit}
         />
       </header>
 
-      {/* Espaço para empurrar o conteúdo abaixo do header sticky */}
-      <div className="h-[02px]" />
+      <div className="h-[2px]" />
     </>
   );
 }

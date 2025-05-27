@@ -1,4 +1,5 @@
-import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa"; // Importa os ícones de estrela para o sistema de classificação
+import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
+import React from 'react'; // Importa os ícones de estrela para o sistema de classificação
 
 interface StarRatingProps {
   rating: number;  // Nota de avaliação fornecida como número (por exemplo, 4.5)

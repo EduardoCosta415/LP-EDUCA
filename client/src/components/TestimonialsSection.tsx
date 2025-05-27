@@ -65,17 +65,26 @@ export default function TestimonialsSection() {
   return (
     <section id="depoimentos" className="py-16 bg-neutral-100">
       <div className="container mx-auto px-4">
-        <div className="flex justify-center">
+        <div className="flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-12">
+          {/* Coluna da Imagem - Ordem 1 em todas as telas (fica à esquerda no desktop) */}
+          <div className="w-full lg:w-1/2 flex justify-center lg:justify-end order-1">
+            <div className="max-w-md w-full px-4 lg:px-0">
+              <img 
+                src="/Depoimentos/nota5googleofc.jpeg" 
+                alt="App sendo usado no desktop"
+                className="rounded-xl shadow-lg object-cover w-full h-auto"
+              />
+            </div>
+          </div>
 
-          {/* Apenas a Coluna de Depoimentos */}
-          <div className="w-full lg:w-1/2 flex flex-col items-center">
+          {/* Coluna de Depoimentos - Ordem 2 em todas as telas (fica à direita no desktop) */}
+          <div className="w-full lg:w-1/2 flex flex-col items-center order-2">
             <h2 className="font-poppins font-bold text-4xl text-[#1C1B3A] mb-8 text-center">
               Depoimentos que Inspiram
             </h2>
 
-            {/* Moldura estilo iPhone 6 */}
+            {/* Moldura estilo iPhone */}
             <div className="relative w-[320px] h-[480px] lg:h-[568px] border-[8px] border-neutral-800 rounded-[48px] bg-white shadow-2xl overflow-hidden">
-
               {/* Alto-falante superior (detalhe do iPhone) */}
               <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-1.5 bg-neutral-500 rounded-full z-10" />
 
